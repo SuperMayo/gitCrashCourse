@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Git Crash Course</title>
+
+    <link rel="stylesheet" href="css/reveal.css" />
+    <link rel="stylesheet" href="css/theme/simple.css" />
+
+    <!-- Personnal css -->
+    <link rel="stylesheet" href="css/custom.css" />
+
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/brands.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/fontawesome.min.css" crossorigin="anonymous"> 
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.type = "text/css";
+      link.href = window.location.search.match(/print-pdf/gi)
+        ? "css/print/pdf.css"
+        : "css/print/paper.css";
+      document.getElementsByTagName("head")[0].appendChild(link);
+    </script>
+  </head>
+  <body>
+    <div class="reveal" id="mayo">
+      <div class="slides">
+        <section>
+          <h1>
+            Git & Github
+          </h1>
+          <h3>A crash course</h3>
+          <div class="bigspace"></div>
+          <p>
+            <small class="comment"
+              >2019 <a target="_blank" href="https://mayerowitz.io">Antoine Mayerowitz</a>
+            </small>
+          </p>
+        </section>
+
+        <section
+          data-background="https://skillprogramming.com/images/pictuers/merging_feels_like.gif"
+        >
+          <h2 class="fragment fade-up storytell">
+            &ldquo;Git is too complicated&rdquo;
+          </h2>
+        </section>
+
+        <section>
+          <h3>Overview</h3>
+          <ol>
+            <li><a href="#what-is-git">What is git ?</a></li>
+            <li><a href="#setting-up">Setting up</a></li>
+            <li><a href="#repositories">Repositories</a></li>
+            <li><a href="#the-three-states">The three states</a></li>
+            <li><a href="#workflow">Typical workflow</a></li>
+            <li><a href="#branches">Branches</a></li>
+            <li><a href="#merging">Merging</a></li>
+            <li><a href="#dirty">When it gets dirty</a></li>
+            <li><a href="#github">Github</a></li>
+            <li><a href="#further">Going further</a></li>
+          </ol>
+        </section>
+
+        <!-- ################################################################################ -->
+        <section id="what-is-git">
+          <h5 class="header-title">What is git?</h5>
+          <hr class="left align"/>
+          
+          <section>
+            <h2>What is git?</h2>
+          </section>
+
+          <section>
+            <blockquote cite="https://git-scm.com/">
+              &ldquo;Git is a <span class="fragment highlight-current-green">
+                free and open source
+              </span>
+              <span class="fragment highlight-current-green">distributed</span>
+              <span class="fragment highlight-current-green"
+                >version control
+              </span>
+              system designed to handle everything from small to very large
+              projects with speed and efficiency.&rdquo;
+            </blockquote>
+          </section>
+
+          <section>
+            <h4>Basically, git allows you to keep <span class="important">track</span> of every changes and:</h4>
+            <ul>
+              <li><span class="important">Who</span> made these changes</li>
+              <li><span class="important">What</span> are these changes</li>
+              <li><span class="important">When</span> did it changes</li>
+            </ul>
+          </section>
+        </section>
+
+        <!-- ################################################################################ -->
+
+        <section id="setting-up">
+          <h5 class="header-title">Setting up</h5>
+          <hr class="left align"/>
+
+          <section>
+            <h2>Setting up</h2>
+          </section>
+
+          <section>
+            <h2>Mac</h2>
+            <pre>
+                <span class="alias">antoine@gitcrashcourse$</span> ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+                <span class="alias">antoine@gitcrashcourse$</span> brew install git
+             </pre>
+          </section>
+
+          <section>
+            <h2>Windows</h2>
+            <a target="_blank" href="https://gitforwindows.org/">Download and install</a>
+          </section>
+
+          <section>
+            <h2>GNU/Linux</h2>
+            It depens on your distribution, but you probably already know that.
+          </section>
+
+          <section>
+              <h2>Basic config</h2>
+              <pre>
+                  <span class="alias">antoine@gitcrashcourse$</span> git config --global user.name "<span class="green">&lt;My name&gt;</span>"
+                  <span class="alias">antoine@gitcrashcourse$</span> git config --global user.email <span class="green">&lt;My email&gt;</span>
+              </pre>
+            </section>
+
+
+        </section>
+
+        
+        <!-- ################################################################################ -->
+
+        </section>
+        <section id="repositories">
+          <h5 class="header-title">Repositories</h5>
+          <hr class="left align" />
+
+          <section>
+            <h2>Repositories</h2>
+          </section>
+
+          <section>
+            <p class="storytell">A git repository is like a git <span class="important">project folder</span>. It contains all the history of every files in it.</p>
+          </section>
+
+          <section>
+            <p>There are two ways of setting a Git <span class="tooltip" tooltip-template="repository">repository</span>:</p>
+            <ol>
+              <li>
+                <span class="important">Init</span> a repository from a local
+                directory
+              </li>
+              <li>
+                <span class="important tooltip" tooltip-template="clone">Clone</span> an existing <span class="tooltip" tooltip-template="remote">remote</span> repository
+              </li>
+            </ol>
+
+            <p class="storytell fragment">We will learn the first method for now !</p>
+          </section>
+
+          <section>
+            <h4>git init:</h4>
+            <p><span class="important">Init</span>iate a git repository</p>
+            <pre>
+              <span class="alias">antoine@~$</span> mkdir gitcrashcourse && cd gitcrashcourse <span class="comment"><- create a new folder and go into it</span>
+              <span class="alias">antoine@gitcrashcourse$</span> git init
+              <span class="output">Initialized empty Git repository in /Users/antoine/gitcrashcourse/.git/</span>
+            </pre>
+            <p class="storytell">That's it! You got your first <span class="tooltip" tooltip-template="repository">repository</span></p>
+          </section>
+        </section>
+
+        <!-- ################################################################################ -->
+
+        <section id="the-three-states">
+          <h5 class="header-title">The three states</h5>
+          <hr class="left align" />
+          
+          <section>
+              <h2>The three states</h2>
+          </section>
+
+          <section
+            data-background="https://media.giphy.com/media/6utVzLiyU9OuHbd70D/giphy.gif">
+            <img
+              color
+              src="https://git-scm.com/book/en/v2/images/reset-workflow.png"
+              alt=""
+              height="400px"
+              style="border:none">
+          </section>
+
+          <section>
+            <p>
+              Your local <span class="tooltip" tooltip-template="repository">repository</span> consists of three "trees" maintained by git.
+            </p>
+            <ol>
+              <li>
+                The
+                <span class="important">Working Directory</span> which holds the
+                actual files. <span class="comment">This is where you work</span>
+              </li>
+              <li>
+                The <span class="important">Index</span> which
+                acts as a staging area.
+              </li>
+              <li>
+                The <span class="important">HEAD</span> which points to
+                the last <span class="tooltip" tooltip-template="commit">commit</span> you've made.
+              </li>
+            </ol>
+            <p class="storytell">
+              <span class="important">DON'T PANIC</span>, we'll get through it
+              in the next section
+            </p>
+          </section>
+        </section>
+
+        <!-- ################################################################################ -->
+
+        <section id="workflow">
+          <h5 class="header-title">Typical Workflow</h5>
+          <hr class="left align">
+
+          <section>
+            <h2>Typical Workflow</h2>
+          </section>
+
+          <section>
+            <span class="storytell">Let's make some changes in our new <span class="tooltip" tooltip-template="repository">repo</span>!</span>
+            <pre class="fragment">
+                <span class="alias">antoine@gitcrashcourse$</span> echo "Hello World" > hello_world.txt <span class="comment"><- creates a text file</span>
+                <span class="alias">antoine@gitcrashcourse$</span> cat hello_world.txt <span class="comment"><- print the content of our file</span>
+                <span class="output">Hello World</span>
+            </pre>
+          </section>
+
+          <section>
+            <span class="storytell">Now let's save this <span style="text-decoration: line-through">badass</span> code!</span>
+          </section>
+
+          <section>
+            <h4>git status:</h4>
+            <p>
+              See the state of your local repository
+            </p>
+            <pre>
+              <span class="alias">antoine@gitcrashcourse$  </span> git status
+              <span class="output">On branch master
+
+              No commits yet
+              
+              Untracked files:
+                (use "git add <file>..." to include in what will be committed)
+              
+                <span class="red">hello_world.txt</span>
+              
+              nothing added to commit but untracked files present (use "git add" to track)</span>
+           </pre>
+           <p class="storytell">Hey look, git tells us that there is a new file!</p>
+          </section>
+
+          <section>
+            <h4>git add:</h4>
+            <p>
+              <span class="important">Add</span> file(s) to the <span class="important">staging state</span> to track them.
+            </p>
+            <pre>
+              <span class="alias">antoine@gitcrashcourse$</span> git add hello_world.txt
+              <span class="alias">antoine@gitcrashcourse$</span> git status
+              On branch master
+
+              No commits yet
+              
+              Changes to be committed:
+                (use "git rm --cached file..." to unstage)
+              
+                <span class="green">new file:   hello_world.txt</span>
+             </pre>
+
+             <p class="storytell">Now git tracks our file, but it is not <span class="tooltip" tooltip-template="commit">commited</span> yet</p>
+          </section>
+
+          <section>
+            <h4>git commit:</h4>
+            <p>
+              Save tracked changes from the <span class="important">staging area</span> to the <span class="important">HEAD</span>.
+            </p>
+            <pre>
+            <span class="alias">antoine@gitcrashcourse$</span> git commit -m "my first commit"
+            <span class="output">[master (root-commit) acaad7c] my first commit
+              1 file changed, 1 insertion(+)
+              create mode 100644 hello_world.txt</span>
+             </pre>
+             <p class="storytell">Done!... Well ... what've changed ?</p>
+          </section>
+
+          <section>
+            <p class="storytell">Git allows you to track changes, remember ?</p>
+          </section>
+
+          <section>
+            <h4>git log:</h4>
+            <p>
+              See the commits history.
+            </p>
+            <pre>
+              <span class="alias">antoine@gitcrashcourse$</span> git log
+              <span class="output">Author: Antoine Mayerowitz < antoine@mayerowitz.io > <span class="comment"><- <span class="fragment highlight-current-green">Who</span></span>
+              Date:   Tue Apr 2 13:32:33 2019 +0200 <span class="comment"><- <span class="fragment highlight-current-green">When</span></span>
+
+              my first commit</span> <span class="comment"><- <span class="fragment highlight-current-green">What</span></span>
+             </pre>
+          </section>
+
+        <section>
+            <p class="storytell">Let's recap !</p>
+            <ul>
+              <li>We <span class="tooltip important" tooltip-template="add">add</span> to tell git to track our file.</li>
+              <li>We <span class="important">stage</span> (also using add...) to tell git the current state of the file.</li>
+              <li>Finally we <span class="tooltip important" tooltip-template="commit">commit</span> to save the changes we made on tracked files.</li>
+            </ul>
+        </section>
+
+        <section data-background-color="#005959">
+            <p class="storytell">Exercise: Add changes to <code class="inline">hello_world.txt</code> and commit those changes!</p>
+            <pre class="fragment">
+                <span class="alias">antoine@gitcrashcourse$</span> date >> hello_world.txt <span class="comment"><- Add new line with the date</span>
+                <span class="alias">antoine@gitcrashcourse$</span> cat hello_world.txt
+                <span class="output">Hello World
+                  Tue Apr  2 13:48:52 CEST 2019</span>
+            </pre>
+            <pre class="fragment">
+                <span class="alias">antoine@gitcrashcourse$</span> git status
+                <span class="output">On branch master
+                    Changes not staged for commit:
+                      (use "git add < file >..." to update what will be committed)
+                      (use "git checkout -- < file >..." to discard changes in working directory)
+                    
+                      <span class="red">modified:   hello_world.txt</span>
+                    
+                    no changes added to commit (use "git add" and/or "git commit -a")</span>
+            </pre>
+        </section>
+
+        <section data-background-color="#005959">
+            <pre>
+                <span class="alias">antoine@gitcrashcourse$</span> git add hello_world.txt
+                <span class="alias">antoine@gitcrashcourse$</span> git status
+                <span class="output">On branch master
+                    Changes to be committed:
+                      (use "git reset HEAD < file >..." to unstage)
+                    
+                      <span class="green">modified:   hello_world.txt</span></span>
+            </pre>
+            <pre class="fragment">
+                <span class="alias">antoine@gitcrashcourse$</span> git commit -m "my second commit"
+                <span class="output">[master a7a9d44] my second commit
+                1 file changed, 1 insertion(+)</span>
+                <span class="alias">antoine@gitcrashcourse$</span> git status
+                <span class="output">On branch master
+                    nothing to commit, working tree clean</span>
+            </pre>
+        </section>
+
+        <section data-background-color="#005959">
+            <p class="storytell">Yeah!</p>
+            <pre>
+                <span class="alias">antoine@gitcrashcourse$</span> git log
+                <span class="output">commit a7a9d4417359b9a201a71fb1b1d63ac045e2abce (HEAD -> master)
+                    Author: Antoine Mayerowitz < antoine@mayerowitz.io >
+                    Date:   Tue Apr 2 14:00:34 2019 +0200
+                    
+                        my second commit
+                    
+                    commit acaad7c5f17eed84ece418e3df981559de09bb01
+                    Author: Antoine Mayerowitz < antoine@mayerowitz.io >
+                    Date:   Tue Apr 2 13:32:33 2019 +0200
+                    
+                        my first commit</span>
+            </pre>
+        </section>
+        </section>
+
+        <!-- ################################################################################ -->
+
+        <section id="branches">
+          <h5 class="header-title">Branches</h5>
+          <hr class="left align" />
+
+          <section>
+            <h2>Branches</h2>
+          </section>
+
+          <section>
+            <h3>What are branches ?</h3>
+            <ul>
+              <li>
+                A <span class="important">parallel version</span> of your
+                <span class="tooltip" tooltip-template="repository">repository</span>
+              </li>
+              <li>The "master" branch is git's default</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>Why using branches ?</h3>
+            <ul>
+              <li>
+                To <span class="important">isolate</span> your work from others
+              </li>
+              <li>To <span class="important">experiment</span> new things</li>
+              <li>
+                To keep your workspace <span class="important">clean</span>
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h4>When to use branches ?</h4>
+            <div class="space"></div>
+            <ul>
+              <li>
+                When you develop a <span class="important">new feature</span>
+              </li>
+              <li>
+                When you don't want to
+                <span class="important">overwrite</span> previous code yet
+              </li>
+            </ul>
+            <div class="space"></div>
+            <p class="comment">
+              Tip: Do not edit your Master <span class="tooltip" tooltip-template="branch">branch</span> directly when you work within
+              a team. It's better practice to create another branch and <span class="tooltip" tooltip-template="merge">merge</span> it
+              when you are ready
+            </p>
+          </section>
+
+          <section>
+            <h3>Create a branch</h3>
+            <pre>
+                <span class="alias">antoine@gitcrashcourse$</span> git checkout -b development
+                <span class="output">Switched to a new branch 'development'</span>
+           </pre>
+            <p class="footnote">
+              You can also use <code class="inline"> git branch &lt;branchname&gt;</code> but you won't
+              <span class="important tooltip" tooltip-template="checkout">checkout</span> automatically to this branch
+            </p>
+          </section>
+
+          <section>
+            <h3>Making some changes</h3>
+            <p class="storytell">Let's add some experimental things to our new branch</p>
+            <pre>
+                <span class="alias">antoine@gitcrashcourse$</span> echo "Experimental code" >> hello_world.txt
+                <span class="alias">antoine@gitcrashcourse$</span> cat hello_world
+                <span class="output">Hello World
+                    Tue Apr  2 13:48:52 CEST 2019
+                    Experimental code</span>
+             </pre>
+          </section>
+
+
+          <section>
+              <h3>Check the status</h3>
+              <pre>
+                  <span class="alias">antoine@gitcrashcourse$</span> git status
+                  <span class="output">On branch development
+                      Changes not staged for commit:
+                        (use "git add &lt;file&gt; ..." to update what will be committed)
+                        (use "git checkout -- &lt;file&gt;..." to discard changes in working directory)
+                      
+                        <span class="red">modified:   hello_world.txt</span>
+                      
+                      no changes added to commit (use "git add" and/or "git commit -a")</span>
+               </pre>
+               <p class="storytell">Notice that Git tells us we are on the development branch</p>
+            </section>
+
+          <section>
+            <h3>Stage and commit</h3>
+            <pre>
+              <span class="alias">antoine@gitcrashcourse$</span> git add hello_world.txt
+              <span class="alias">antoine@gitcrashcourse$</span> git commit -m "Experimental feature"
+              <span class="output">[development 9344d4e] Experimental feature
+                  1 file changed, 1 insertion(+)</span>
+            </pre>
+          </section>
+
+          <section>
+            <h3>List all branches</h3>
+            <pre>
+              <span class="alias">antoine@gitcrashcourse$</span> git branch
+              <span class="output">* <span class="green">development</span>
+              master</span>
+            </pre>
+            <p class="storytell">The master branch is the one created by default!</p>
+          </section>
+
+          <section>
+            <h3>Switch branch</h3>
+            <p class="storytell">Maybe you will want to go back on master branch?</p>
+            <pre>
+                <span class="alias">antoine@gitcrashcourse$</span> git checkout master
+                <span class="output">Switched to branch 'master'
+                Your branch is up to date with 'origin/master'.</span>
+                <span class="alias">antoine@gitcrashcourse$</span> git branch
+                <span class="output">development
+                * <span class="green">master</span></span>
+                <span class="alias">antoine@gitcrashcourse$</span> cat hello_world.txt
+                <span class="output">Hello World
+                    Tue Apr  2 13:48:52 CEST 2019</span> 
+            </pre>
+          </section>
+
+          <section data-background-color="#005959">
+            <p class="storytell">Exercise:</p>
+            <ul>
+              <li>Create a new branch <code class="inline">test</code></li>
+              <li>Switch to this branch and create a new file <code class="inline">bad_idea.txt</code> with some text in it</li>
+              <li>Stage and commit this file</li>
+              <li>Switch back to master and delete this branch with <code class="inline">git branch -D &lt;branchname&gt;</code></li>
+            </ul>
+          </section>
+        </section>
+
+        <!-- ################################################################################ -->
+
+        <section id="merging">
+          <h5 class="header-title">Merging</h5>
+          <hr class="left align" />
+
+          <section>
+            <h2>Merging</h2>
+          </section>
+
+          <section>
+            <p class="storytell">What if I want to get the changes of one branch into another?</p>
+            <h3 class="fragment important">Git merge !</h3>
+          </section>
+
+          <section>
+            <h4>Merging dev into master</h4>
+            <p class="storytell">Be sure to be on master !</p>
+            <pre>
+                <span class="alias">antoine@gitcrashcourse$</span> git checkout master
+                <span class="alias">antoine@gitcrashcourse$</span> git merge development
+                <span class="output">Updating a7a9d44..9344d4e
+                Fast-forward
+                 hello_world.txt | 1 +
+                 1 file changed, 1 insertion(+)</span>
+            </pre>
+            <h5 class="fragment important">So simple!</h5>
+          </section>
+
+          <section>
+              <h4>There can be conflicts!</h4>
+              <p class="storytell">Let's create some modifications in development:</p>
+              <pre>
+                  <span class="alias">antoine@gitcrashcourse$</span> git checkout development
+                  <span class="alias">antoine@gitcrashcourse$</span> sed -i '' 's/World/Friends/' hello_world.txt <span class="comment"><- replace World by Friends</span>
+                  <span class="alias">antoine@gitcrashcourse$</span> git add hello_world.txt
+                  <span class="alias">antoine@gitcrashcourse$</span> git commit -m "change line 1"
+              </pre>
+              <p class=" fragment storytell">And also in master:</p>
+              <pre class="fragment">
+                  <span class="alias">antoine@gitcrashcourse$</span> git checkout master
+                  <span class="alias">antoine@gitcrashcourse$</span> sed -i '' 's/World/You/' hello_world.txt
+                  <span class="alias">antoine@gitcrashcourse$</span> git add hello_world.txt
+                  <span class="alias">antoine@gitcrashcourse$</span> git commit -m "change line 1"
+              </pre>
+          </section>
+
+          <section>
+            <p class="storytell">Our two files should look like this:</p>
+            <div class="left column">
+              <h4><code>master</code></h4>
+              <pre>
+                  Hello <span class="fragment highlight-red" data-fragment-index="1">You</span>
+                  Tue Apr  2 13:48:52 CEST 2019
+                  Experimental code
+              </pre>
+            </div>
+            <div class="right column">
+                <h4><code>development</code></h4>
+                <pre>
+                    Hello <span class="fragment highlight-red" data-fragment-index="1">Friends</span>
+                    Tue Apr  2 13:48:52 CEST 2019
+                    Experimental code
+                </pre>
+            </div>
+            <p class="storytell fragment" data-fragment-index="2">What will happen when we'll merge?</p>
+          </section>
+
+          <section> 
+            <p class="storytell">Let's try to merge automatically</p>
+            <p class="comment">Don't forget to go on the master branch !</p>
+            <pre>
+                <span class="alias">antoine@gitcrashcourse$</span> git merge development
+                <span class="output">Auto-merging hello_world.txt
+                    CONFLICT (content): Merge conflict in hello_world.txt
+                    Automatic merge failed; fix conflicts and then commit the result.</span>
+            </pre>
+            <p class="storytell fragment">Oupsie! Guess we'll have to do it by hand.</p>
+          </section>
+
+          <section> 
+              <p class="storytell">What does our file looks like ?</p>
+              <pre class="fragment">
+                <span class="green"><<<<<<< HEAD</span>
+                Hello You
+                <span class="green">=======</span>
+                Hello Friends
+                <span class="green">>>>>>>> development</span>
+                Tue Apr  2 13:48:52 CEST 2019
+                Experimental code
+              </pre>
+              <p class="storytell fragment">We need to manually edit the file and keep our favorite version.</p>
+              <p class="comment fragment">Don't forget to delete the git tags during the process! You can also make any other changes you like, just make it work!</p>
+            </section>
+
+            <section> 
+                <p class="storytell">Save your file when your done.</p>
+                <pre class="fragment">
+                  Hello Friends
+                  Tue Apr  2 13:48:52 CEST 2019
+                  Experimental code
+                </pre>
+                <p class="storytell fragment">Let's finish this merging !</p>
+            </section>
+
+            <section> 
+                <p class="storytell">We're close..</p>
+                <pre class="fragment">
+                  <span class="alias">antoine@gitcrashcourse$</span> git add hello_world.txt
+                  <span class="alias">antoine@gitcrashcourse$</span> git commit -m "Fix merge conflict"
+                  <span class="output">[master 5059be6] Fix merge conflict</span>
+                </pre>
+                <p class="storytell fragment">Done !</p>
+            </section>
+
+            <section data-background-color="#005959"> 
+                <p class="storytell">Exercise:</p>
+                <ul>
+                  <li>Create a new branch.</li>
+                  <li>Create a new file <code class="inline">mastering_git.txt</code> with some text.</li>
+                  <li>Stage and commit those changes.</li>
+                  <li>Merge your newly created branch into master.</li>
+                </ul>
+            </section>
+        </section>
+
+        <!-- ################################################################################ -->
+
+        <section id="dirty">
+            <h5 class="header-title">When it gets dirty</h5>
+            <hr class="left align" />
+  
+            <section>
+              <h2>When it gets dirty</h2>
+            </section>
+
+            <section>
+               <p class="storytell">It's human to make some mistakes. Here are some ways to revert them.</p>
+            </section>
+
+            <section>
+              <h4>Undo unstaged local changes:</h4>
+              <p><code class="inline">git checkout &lt;myfile&gt;</code></p>
+              <pre>
+                <span class="alias">antoine@gitcrashcourse$</span> echo "some text" >> hello_world.txt
+                <span class="alias">antoine@gitcrashcourse$</span> cat hello_world.txt
+                <span class="output">Hello Friends
+                    Tue Apr  2 13:48:52 CEST 2019
+                    Experimental code
+                    some text</span>
+                <span class="alias">antoine@gitcrashcourse$</span> git checkout hello_world.txt
+                <span class="alias">antoine@gitcrashcourse$</span> cat hello_world.txt
+                <span class="output">Hello Friends
+                    Tue Apr  2 13:48:52 CEST 2019
+                    Experimental code</span>
+              </pre>
+            </section>
+
+            <section>
+                <h4>Undo staged changes:</h4>
+                <p><code class="inline">git reset HEAD &lt;myfile&gt;</code></p>
+                <pre>
+                  <span class="alias">antoine@gitcrashcourse$</span> echo "some staged changes" >> hello_world.txt
+                  <span class="alias">antoine@gitcrashcourse$</span> git add hello_world.txt
+                  <span class="alias">antoine@gitcrashcourse$</span> git status
+                  <span class="output">On branch master
+                    Changes to be committed:
+                    (use "git reset HEAD <file>..." to unstage)
+                         <span class="green">        modified:   hello_world.txt</span></span>
+                  <span class="alias">antoine@gitcrashcourse$</span> git reset HEAD hello_world.txt <span class="comment"><- unstaging</span>
+                  <span class="output">Unstaged changes after reset:
+                      M	hello_world.txt</span>
+                  <span class="alias">antoine@gitcrashcourse$</span> git checkout hello_world.txt <span class="comment"><- undo changes</span>
+                </pre>
+            </section>
+
+            <section>
+                <h4>Undo commited changes!</h4>
+                </p><code class="inline">git revert &lt;myfile&gt;</code></p>
+                <pre>
+                  <span class="alias">antoine@gitcrashcourse$</span> echo "some committed changes" >> hello_world.txt
+                  <span class="alias">antoine@gitcrashcourse$</span> git add hello_world.txt
+                  <span class="alias">antoine@gitcrashcourse$</span> git commit -m "commit to revert"
+                  <span class="output">[master afd6c39] commit to revert
+                      1 file changed, 1 insertion(+)</span>
+                  <span class="alias">antoine@gitcrashcourse$</span> git log
+                  <span class="output">commit <span class="fragment highlight-current-red">afd6c398e5e6fe00d31d3218762be5035e635ef4</span> (HEAD -> master)
+                      Author: Antoine Mayerowitz <antoine@mayerowitz.io>
+                      Date:   Tue Apr 2 17:29:30 2019 +0200
+                      
+                          commit to revert
+                      [...]  </span>
+                  <span class="alias">antoine@gitcrashcourse$</span> git revert --no-edit <span class="fragment highlight-current-red">afd6c398e5e6fe00d31d3218762be5035e635ef4</span>
+                </pre>
+                <p class="small comment">You can also use git reset to cancel a commit but we won't cover that</p>
+            </section>
+
+            <section>
+                <h4>Bonus: Ignoring files</h4>
+                </p>You can use the <code class="inline">.gitignore</code> to ignore some extensions</p>
+                <pre>
+                  <span class="alias">antoine@gitcrashcourse$</span> zip hello_world.zip hello_world.txt
+                  <span class="alias">antoine@gitcrashcourse$</span> git status
+                  <span class="output">On branch master
+                      Untracked files:
+                        (use "git add <file>..." to include in what will be committed)
+                        <span class="red">hello_world.zip</span>
+                      </span>
+                  <span class="alias">antoine@gitcrashcourse$</span> echo "*.zip" > .gitignore <span class="comment"><- ignore all zip files</span>
+                  <span class="alias">antoine@gitcrashcourse$</span> git status
+                  <span class="output">On branch master
+                      Untracked files:
+                        (use "git add < file >..." to include in what will be committed)
+                        <span class="red">.gitignore</span><span class="comment"> <- No more zip files !</span></span>
+                </pre>
+                <p class="small comment">Having a gitignore in your project is great to keep it clean !</p>
+            </section>
+        </section>
+
+        <!-- ################################################################################ -->
+
+        <section id="github">
+            <h5 class="header-title"><i class="fab fa-github"></i> Github</h5>
+            <hr class="left align" />
+  
+            <section>
+              <h2><i class="fab fa-github"></i> Github</h2>
+            </section>
+
+            <section>
+                <h3 class="important">Git &#8800; Github </h3>
+            </section>
+
+            <section>
+                <p>Github is a <span class="important">commercial website</span> that allows users to <span class="important">host</span> Git <span class="tooltip" tooltip-template="repository">repositories</span>. It comes with popular extra features.</p>
+            </section>
+
+            <section>
+                <p class="storytell">We'll also need to learn a bit of extra git commands ...</p>
+                <p class="storytell fragment">But first let's <a target="_blank" href="https://github.com/join?source=header-home">create an account</a>.</p>
+            </section>
+
+            <section>
+                <h4>Create a new repository:</h4>
+                <img src="img/create_account.png" alt="">
+            </section>
+
+            <section>
+                <h4>Give it a name and the description you like.</h4>
+                <p class="comment">A common practice is to give the repo the same name as your directory.</p>
+            </section>
+
+            <section>
+                <img src="img/first_repo.png" alt="" style="height:60vh">
+            </section>
+
+            <section>
+                <p class="storytell">We will use the third method:</p>
+                <pre>
+                    <span class="alias">antoine@gitcrashcourse$</span> git remote add origin https://github.com/SuperMayo/gitCourseExample.git <span class="comment"><- Do not copy-paste !!!!</span>
+                    <span class="alias">antoine@gitcrashcourse$</span> git push -u origin master
+                    <span class="output">Counting objects: 20, done.
+                        Delta compression using up to 4 threads.
+                        Compressing objects: 100% (12/12), done.
+                        Writing objects: 100% (20/20), 1.83 KiB | 939.00 KiB/s, done.
+                        Total 20 (delta 2), reused 0 (delta 0)
+                        remote: Resolving deltas: 100% (2/2), done.
+                        To https://github.com/SuperMayo/gitCourseExample.git
+                         * [new branch]      master -> master
+                        Branch 'master' set up to track remote branch 'master' from 'origin'.</span>
+                </pre>
+                <p class="storytell">Github may ask you your credential for the first time.</p>
+            </section>
+
+            <section>
+                <p class="storytell">Go back to your repository on Github ...</p>
+                <h3 class="important fragment blink_me">YEAH!</h3>
+            </section>
+
+            <section>
+                <p class="storytell">We've just seen some new functions:<p>
+                <ul>
+                  <li><span class="important">git <span class="tooltip" tooltip-template="remote">remote</span> add</span>: sets an online repository (by convention it's called "origin").</li>
+                  <p class="small comment">You can check your remote repositories with <code class="inline">git remote</code></p>
+                  <li><span class="important">git push</span>: sends local commit to the given remote repository</li>
+                  <p class="small comment">The <code class="inline">-u</code> option is used only once to define the <span class="tooltip" tooltip-template="upstream">upstream</span> (=default) remote. Then you use it like <code class="inline">git push &lt;remote name&gt; &lt;branch name&gt;</code></p>
+                </ul>
+            </section>
+
+            <section>
+                <p class="storytell">Let's add the development branch as well. <br>Try to do it yourself!<p>
+                <pre class="fragment">
+                  <span class="alias">antoine@gitcrashcourse$</span> git push origin development
+                </pre>
+            </section>
+
+            <section>
+                <p class="storytell">What happen if someone else changes something on the remote repository ?<p>
+                <p class="storytell fragment">Let simulate that by editing directly on github!<p>
+                <img src="img/edit_file01.png" alt="" class="fragment">
+            </section>
+
+            <section>
+                <img src="img/edit_file02.png" alt="" style="height:30vh">
+                <img src="img/commit_github.png" alt="" class="fragment" style="height:30vh">
+            </section>
+
+            <section>
+                <p class="storytell">Now go back to your console.</p>
+            </section>
+
+            <section>
+                <p class="storytell">If I try to push new changes...</p>
+                <pre>
+                    <span class="alias">antoine@gitcrashcourse$</span> git add .gitignore
+                    <span class="alias">antoine@gitcrashcourse$</span> git commit -m "add gitignore"
+                    <span class="alias">antoine@gitcrashcourse$</span> git push origin master
+                    <span class="output">o https://github.com/SuperMayo/gitCourseExample.git
+                        ! [rejected]        master -> master (non-fast-forward)
+                       error: failed to push some refs to 'https://github.com/SuperMayo/gitCourseExample.git'
+                       hint: Updates were rejected because the tip of your current branch is behind
+                       hint: its remote counterpart. Integrate the remote changes (e.g.
+                       hint: 'git pull ...') before pushing again.
+                       hint: See the 'Note about fast-forwards' in 'git push --help' for details.</span>
+                </pre>
+                <p class="storytell fragment">I get an error because my local repo is "behind" the remote.</p>
+            </section>
+
+            <section>
+                <p class="storytell">I need to get the updates from the <span class="tooltip" tooltip-template="remote">remote</span>.</p>
+                <h4 class="important">git pull !</h4>
+                <p class="small comment">Git pull will download and merge the remote repo with your HEAD.</p>
+                <pre>
+                    <span class="alias">antoine@gitcrashcourse$</span> git pull --no-edit
+                    <span class="output">Merge made by the 'recursive' strategy.
+                        hello_world.txt | 1 +
+                        1 file changed, 1 insertion(+)</span>
+                    <span class="alias">antoine@gitcrashcourse$</span> git status
+                    <span class="output">On branch master
+                        Your branch is ahead of 'origin/master' by 2 commits.
+                          (use "git push" to publish your local commits)
+                        
+                        nothing to commit, working tree clean</span>
+                </pre>
+            </section>
+
+            <section>
+              <p class="storytell">Finally, we can push our work !</p>
+              <pre>
+                  <span class="alias">antoine@gitcrashcourse$</span> git push origin master
+                  <span class="output">Counting objects: 5, done.
+                      Delta compression using up to 4 threads.
+                      Compressing objects: 100% (4/4), done.
+                      Writing objects: 100% (5/5), 616 bytes | 616.00 KiB/s, done.
+                      Total 5 (delta 0), reused 0 (delta 0)
+                      To https://github.com/SuperMayo/gitCourseExample.git
+                         d627d09..3e7310b  master -> master</span>
+              </pre>
+              <p class="storytell fragment">DONE !</p>
+            </section>
+
+            <section>
+                <h4>Github at its best</h4>
+
+                <p>Usually, when working within a team, you want to keep a "stable" version of your repo(most of the time it's the master branch). You also want your teammates to validate your work before merging it into master.</p>
+
+                <h3 class="important fragment">Pull Requests !</h3>
+            </section>
+
+            <section>
+                <h4>A <span class="important">pull request</span> is the way to ask the admin(s) of a <span class="tooltip" tooltip-template="remote">remote</span> <span class="tooltip" tooltip-template="repository">repository</span> to incorporate your changes</h4>
+            </section>
+
+            <section>
+                <p class="storytell">Let's imagine that you work on our previous project. You just created a new feature, added new data, cleaned some files ... </p>
+            </section>
+
+            <section>
+                <p class="storytell">Go back to your console!</p>
+                <pre class="fragment">
+                    <span class="alias">antoine@gitcrashcourse$</span> git checkout -b new-feature
+                    <span class="alias">antoine@gitcrashcourse$</span> echo "New feature to be reviewed" > feature.txt
+                    <span class="alias">antoine@gitcrashcourse$</span> git add * <span class="comment"><- the star is a way to stage everything in our repo</span>
+                    <span class="alias">antoine@gitcrashcourse$</span> git commit -m "New feature to do X"
+                    <span class="alias">antoine@gitcrashcourse$</span> git push origin new-feature
+                    <span class="output">Counting objects: 3, done.
+                        Delta compression using up to 4 threads.
+                        Compressing objects: 100% (2/2), done.
+                        Writing objects: 100% (3/3), 352 bytes | 352.00 KiB/s, done.
+                        Total 3 (delta 0), reused 0 (delta 0)
+                        remote:
+                        remote: Create a pull request for 'new-feature' on GitHub by visiting:
+                        remote:      https://github.com/SuperMayo/gitCourseExample/pull/new/new-feature
+                        remote:
+                        To https://github.com/SuperMayo/gitCourseExample.git
+                         * [new branch]      new-feature -> new-feature</span>
+                  </pre>
+            </section>
+
+            <section >
+               <p class="storytell">Now you want those changes to be reviewed by your teammates before incorporating them in the master branch.</p>
+            </section>
+
+            <section>
+                <p class="storytell">Go back to Github!</p>
+            </section>
+
+            <section>
+                <p class="storytell">Go on the pull request tab.</p>
+                <img src="img/pull_request01.png" alt="" style="height:60vh">
+            </section>
+
+            <section>
+                <p class="storytell">Select the branch you wish to merge.</p>
+                <img src="img/pull_request02.png" alt="" style="height:60vh">
+            </section>
+
+            <section>
+                <p class="storytell">A lot of info here. When you are ready you can create the pull request.</p>
+                <img src="img/pull_request03.png" alt="" style="height:60vh">
+            </section>
+
+            <section>
+                <p class="storytell">It's a good thing to write a message to explain what you've done!</p>
+                <img src="img/pull_request04.png" alt="" style="height:60vh">
+            </section>
+
+            <section>
+              <h4 class="important">Yeah!</h4>
+              <img src="img/pull_request05.png" alt="" style="height:60vh">
+            </section>
+        </section>
+
+        <!-- ################################################################################ -->
+
+        <section id="further">
+            <h5 class="header-title">To go further</h5>
+            <hr class="left align" />
+  
+            <section>
+              <h2>To go further</h2>
+            </section>
+
+            <section>
+              <p class="storytell">Many other things to cover:</p>
+              <ul>
+                <li><a target="_blank" href="https://guides.github.com/features/issues/">Issues</a></li>
+                <li><a target="_blank" href="https://guides.github.com/activities/forking/">Forks</a></li>
+                <li><a target="_blank" href="https://guides.github.com/activities/citable-code/">Citable code</a></li>
+                <li>continuous integration, Readme, Projects, Organizations, ...</li>
+              </ul>
+              <p class="storytell fragment">And many more <span class="storytell fragment">...</span></p>
+            </section>
+
+            <section data-background-color="#000">
+                <h5 class="retro font">IT'S DANGEROUS TO GO ALONE! TAKE THIS.</h5>
+                <img src="img/zelda-fire.gif" alt="" style="width: 10%; margin-right: 150px">
+                <img src="img/zelda-magician.png" alt="" style="width: 10%">
+                <img src="img/zelda-fire.gif" alt="" style="width: 10%; margin-left: 150px">
+                <ul>
+                  <li>
+                    Guides: <a target="_blank" href="https://www.git-tower.com/blog/git-cheat-sheet">cheasheet</a>, <a target="_blank" href="http://rogerdudler.github.io/git-guide/">simple guide</a>, <a target="_blank" href="https://guides.github.com/">Github guides</a>
+                  </li>
+                  <li>GUI: <a target="_blank" href="https://www.gitkraken.com/"><i class="fab fa-gitkraken"></i> GitKraken</a></li>
+                  <li>Docs: <a target="_blank" href="https://git-scm.com/doc"><i class="fab fa-git-square"></i> Official doc</a></li>
+                  <li>Github alternatives: <a target="_blank" href="https://about.gitlab.com/"><i class="fab fa-gitlab"></i> Gitlab</a>, <a target="_blank" href="https://bitbucket.org/"><i class="fab fa-bitbucket"></i> Bitbucket</a></li>
+                </ul>
+              </section>
+        </section>
+
+        <section>
+          <h2 class="important">Thank you!</h2>
+
+        </section>
+
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <!-- TOOLTIP -->
+    <script src="https://unpkg.com/popper.js@1/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@4"></script>
+
+    <template id="clone">
+      <h1>Clone</h1>
+      <p>A clone is a copy of a repository that lives on your computer instead of on a website's server somewhere, or the act of making that copy. With your clone you can edit the files in your preferred editor and use Git to keep track of your changes without having to be online. It is, however, connected to the remote version so that changes can be synced between the two. You can push your local changes to the remote to keep them synced when you're online.</p>
+    </template>
+
+    <template id="repository">
+      <h1>Repository</h1>
+      <p>Contains all of the project files and stores a revision history. Think of them as project folders.</p>
+    </template>
+
+    <template id="branch">
+      <h1>Branch</h1>
+      <p>A branch is a parallel version of a repository. It is contained within the repository, but does not affect the primary or master branch allowing you to work freely without disrupting the "live" version. When you've made the changes you want to make, you can merge your branch back into the master branch to publish your changes</p>
+    </template>
+
+    <template id="commit">
+      <h1>Commit</h1>
+      <p>A commit, or "revision", is an individual change to a file (or set of files). It's like when you save a file, except with Git, every time you save it creates a unique ID (a.k.a. the "SHA" or "hash") that allows you to keep record of what changes were made when and by who. Commits usually contain a commit message which is a brief description of what changes were made.</p>
+    </template>
+
+    <template id="merge">
+      <h1>Merge</h1>
+      <p>Merging takes the changes from one branch and applies them into another.</p>
+    </template>
+
+    <template id="remote">
+      <h1>Remote</h1>
+      <p>This is the version of something that is hosted on a server (ex: Github, Gitlab, Bitbucket ...). It can be connected to local clones so that changes can be synced.</p>
+    </template>
+
+    <template id="upstream">
+        <h1>Upstream</h1>
+        <p>When talking about a branch or a fork, the primary branch on the original repository is often referred to as the "upstream", since that is the main place that other changes will come in from. The branch/fork you are working on is then called the "downstream".</p>
+    </template>
+
+    <template id="add">
+        <h1>add</h1>
+        <p>Updates the index using the current content found in the working tree, to prepare the content staged for the next commit.</p>
+    </template>
+
+    <template id="checkout">
+      <h1>Checkout</h1>
+      <p>The git checkout command lets you navigate between the branches created by git branch. Checking out a branch updates the files in the working directory to match the version stored in that branch, and it tells Git to record all new commits on that branch. Think of it as a way to select which line of development you’re working on.</p>
+    </template>
+
+    <script>
+      tippy('.tooltip', {
+        theme: "mayo",
+        duration: 500,
+        animation: "shift-toward", // "shift-away" || "shift-toward" ||"fade" || "scale" || "perspective"
+        content(reference) {
+          console.log(reference)
+          const id = reference.getAttribute('tooltip-template')
+          const container = document.createElement('div')
+          const linkedTemplate = document.getElementById(id)
+          const node = document.importNode(linkedTemplate.content, true)
+          container.appendChild(node)
+          return container
+        },
+      })
+    </script>
+
+    <!-- REVEAL CONFIG -->
+
+    <script>
+      // More info about config & dependencies:
+      // - https://github.com/hakimel/reveal.js#configuration
+      // - https://github.com/hakimel/reveal.js#dependencies
+      Reveal.initialize({
+        dependencies: [
+          { src: "plugin/markdown/marked.js" },
+          { src: "plugin/markdown/markdown.js" },
+          { src: "plugin/notes/notes.js", async: true },
+          {
+            src: "plugin/highlight/highlight.js",
+            async: true,
+            callback: function() {
+              hljs.initHighlightingOnLoad();
+            }
+          }
+        ],
+        transition: "none"
+      });
+
+      Reveal.configure({ slideNumber: true });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,237 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400, 700);
+@import url(https://fonts.googleapis.com/css?family=PT+Sans:400, 700);
+@import url(https://fonts.googleapis.com/css?family=Inconsolata);
+@font-face {
+  font-family: Retro;
+  src: url("../lib/font/the-legend-of-zelda-nes.ttf");
+}
+
+/* Tools */
+#mayo .space {
+  display: block;
+  height: 50px;
+}
+
+#mayo .bigspace {
+  display: block;
+  height: 100px;
+}
+
+#mayo .red {
+  color: #e74c3c;
+}
+
+#mayo .comment {
+  color: #8b959c;
+}
+
+#mayo .green {
+  color: #29a85e;
+}
+
+#mayo .storytell {
+  font-family: "PT Sans";
+  font-weight: 700;
+  color: #fad390;
+}
+
+#mayo .important {
+  color: #ff9f1c;
+}
+
+#mayo .comment {
+  font-weight: lighter;
+  opacity: 0.5;
+}
+
+#mayo .header-title {
+  color: #7b91a5;
+  text-align: left;
+  font-size: 0.8em;
+  margin-bottom: 0;
+}
+
+#mayo .small {
+  font-size: 0.6em !important;
+}
+
+#mayo .blink_me {
+  animation: blinker 1.5s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+#mayo .retro.font {
+  font-family: Retro;
+}
+
+/* INLINE CODE */
+
+#mayo code.inline {
+  background-color: #282828;
+  font-family: "Inconsolata";
+  font-size: 0.7em;
+  padding: 5px;
+  border-radius: 10px;
+  border: 1px solid #5e5d5d;
+}
+
+/* TOOLTIP */
+.tippy-tooltip.mayo-theme {
+  background-color: #282828;
+  font-family: "Montserrat";
+  border: 1px solid #5e5d5d;
+  text-align: center;
+  padding: 10px;
+}
+
+.tippy-tooltip.mayo-theme[data-animatefill] {
+  background-color: #193549;
+}
+
+#mayo .tooltip {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+}
+
+/* columns */
+
+#mayo .column {
+  display: inline-block;
+  width: 45%;
+  padding: 20px;
+}
+
+#mayo .column.left {
+  float: left;
+}
+
+#mayo .column.right {
+  float: right;
+}
+
+/* GLOBAL STYLES */
+body {
+  background: #193549;
+}
+
+#mayo {
+  color: #ecf0f1;
+  font-family: "Montserrat";
+  font-weight: 400;
+}
+
+#mayo h1,
+#mayo h2,
+#mayo h3,
+#mayo h4,
+#mayo h5,
+#mayo h6 {
+  margin: 0 0 20px 0;
+  color: #ecf0f1;
+  font-family: "Montserrat", Impact, sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  text-transform: none;
+  text-shadow: none;
+  word-wrap: break-word;
+}
+
+#mayo hr.left.align {
+  margin-top: 5px;
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0)
+  );
+}
+
+#mayo img {
+  background: none !important;
+}
+
+/* LISTS */
+#mayo ol {
+  list-style-type: upper-roman;
+}
+
+#mayo ul > li {
+  list-style-type: circle;
+}
+
+/* LINKS */
+#mayo a {
+  color: #2ec4b6;
+  text-decoration: none;
+  -webkit-transition: color 0.15s ease;
+  -moz-transition: color 0.15s ease;
+  transition: color 0.15s ease;
+  text-decoration: none;
+}
+
+#mayo a:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  background-color: #2ec4b6;
+  visibility: hidden;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+#mayo a:hover:before {
+  visibility: visible;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+}
+
+/* PRE styling */
+
+#mayo pre {
+  background-color: #282828;
+  font-family: "Inconsolata";
+  color: #ecf0f1;
+  border-radius: 10px;
+  box-shadow: 0 0 3px rgba(50, 50, 50, 0.8);
+  white-space: pre-line;
+  padding: 20px;
+  text-align: left;
+  margin: 1em;
+  font-size: 14pt;
+  border: 1px solid #5e5d5d;
+}
+
+#mayo pre .alias {
+  color: #2ec4b6;
+}
+
+#mayo pre .output {
+  color: #bdc3c7;
+}
+
+/* FRAGMENTS */
+#mayo .highlight-current-green.current-fragment {
+  color: #2ecc71;
+}
+
+/* CONTROLS */
+#mayo .controls {
+  color: #2ec4b6;
+}
+
+#mayo .progress {
+  background: #ecf0f1;
+  color: #2ec4b6;
+}
